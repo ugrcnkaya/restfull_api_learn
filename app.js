@@ -1,9 +1,7 @@
 const express = require('express');
-const dbPassword = require('./local')
 const app = express();
-
-
-
+const mongoose = require('mongoose')
+require('dotenv/config');
 
 
 //1-Middlewares
@@ -26,6 +24,15 @@ app.get('/posts', (req, res) => {
     res.send('We are on posts.');
 });
 
-//3-How do we start listening to the server?
-app.listen(3000);
 
+
+//3-DB
+mongoose.set('strictQuery', true);
+mongoose.connect(process.env.DB_CONNECTION, ()  => {
+    console.log('connected to db!');
+
+});
+
+
+//4-How do we start listening to the server?
+app.listen(3000);
