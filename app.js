@@ -4,29 +4,22 @@ const mongoose = require('mongoose')
 require('dotenv/config');
 
 
-//1-Middlewares
 
-//function that executes when specific routes are being hit. (bus)
-/*
-* For example = auth can be a middleware feature.
-* */
-app.use('/posts', () => {
-   // console.log("this is a middleware running.")
-});
+//Import Routes
 
-//2-Routes
+const postsRoute = require('./routes/posts');
+app.use('/posts', postsRoute)
+
+
+
 //get, post, delete, patch
 app.get('/', (req, res) => {
     res.send('We are on home.');
 });
 
-app.get('/posts', (req, res) => {
-    res.send('We are on posts.');
-});
 
 
-
-//3-DB
+//db
 mongoose.set('strictQuery', true);
 mongoose.connect(process.env.DB_CONNECTION, ()  => {
     console.log('connected to db!');
@@ -34,5 +27,5 @@ mongoose.connect(process.env.DB_CONNECTION, ()  => {
 });
 
 
-//4-How do we start listening to the server?
+//listen
 app.listen(3000);
